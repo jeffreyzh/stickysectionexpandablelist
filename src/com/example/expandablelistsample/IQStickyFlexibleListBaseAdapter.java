@@ -479,27 +479,31 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 		IQFliexibleListItem item = (IQFliexibleListItem) getItem(position);
 		switch (v.getId()) {
 		case R.id.groupLayout:
-			View parent = (View) v.getParent().getParent();
-			if (parent != null && parent.getId() == R.id.headerLayout) {
-				clickedFromHeader = true;
+			if (isGroupClickable(position)) {
+				View parent = (View) v.getParent().getParent();
+				if (parent != null && parent.getId() == R.id.headerLayout) {
+					clickedFromHeader = true;
+				}
+				if (isExpanded(item.getActualGroupIndex())) {
+					collapse(position);
+				} else {
+					expand(position);
+				}
+				if (getOnFlexibleHeaderClickListener() != null) {
+					getOnFlexibleHeaderClickListener().onHeaderClicked(v,
+							item.getActualGroupIndex());
+				}
+				clickedFromHeader = false;
 			}
-			if (isExpanded(item.getActualGroupIndex())) {
-				collapse(position);
-			} else {
-				expand(position);
-			}
-			if (getOnFlexibleHeaderClickListener() != null) {
-				getOnFlexibleHeaderClickListener().onHeaderClicked(v,
-						item.getActualGroupIndex());
-			}
-			clickedFromHeader = false;
 			break;
 		case R.id.childLayout:
-			if (getOnFlexibleChildClickListener() != null) {
-				getOnFlexibleChildClickListener().onChildClicked(v,
-						item.getActualGroupIndex(), item.getActualChildIndex());
+			if (isChildClickable(getGroupIndex(position), position)) {
+				if (getOnFlexibleChildClickListener() != null) {
+					getOnFlexibleChildClickListener().onChildClicked(v,
+							item.getActualGroupIndex(),
+							item.getActualChildIndex());
+				}
 			}
-
 			break;
 		case R.id.moreLayout:
 			if (getOnFlexibleMoreClickListener() != null) {
@@ -718,5 +722,10 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 	public void notifyDataSetChanged() {
 		adjustViews();
 	}
+
+	public abstract boolean isGroupClickable(int position);
+
+	public abstract boolean isChildClickable(int groupPosition,
+			int childPosition);
 
 }

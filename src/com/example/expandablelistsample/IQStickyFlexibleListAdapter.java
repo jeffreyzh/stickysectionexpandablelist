@@ -104,4 +104,26 @@ public class IQStickyFlexibleListAdapter extends
 		return convertView;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.example.expandablelistsample.IQStickyFlexibleListBaseAdapter#isGroupClickable(int)
+	 * @since 30-Apr-2013
+	 * @author Pushpan 
+	 */
+	@Override
+	public boolean isGroupClickable(int position) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.example.expandablelistsample.IQStickyFlexibleListBaseAdapter#isChildClickable(int, int)
+	 * @since 30-Apr-2013
+	 * @author Pushpan 
+	 */
+	@Override
+	public boolean isChildClickable(int groupPosition, int childPosition) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 }
