@@ -26,6 +26,8 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 		implements OnClickListener {
 
 	private Context context;
+	private boolean clickedFromHeader = false;
+	private IQStickyFlexibleListView stickyFlexibleListView;
 
 	/**
 	 * @param of
@@ -62,17 +64,16 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 	private boolean enableMore;
 
 	/**
-	 * @param sampleActivity
-	 * @param headers
-	 * @param children
-	 * @return of type IQStickyFlexibleListAdapter Constructor function
-	 * @since 02-Mar-2013
+	 * @param context2
+	 * @param listView
+	 * @return of type IQStickyFlexibleListBaseAdapter Constructor function
+	 * @since 29-Apr-2013
 	 * @author Pushpan
 	 */
-	public IQStickyFlexibleListBaseAdapter(Context context) {
+	public IQStickyFlexibleListBaseAdapter(Context context,
+			IQStickyFlexibleListView stickyFlexibleListView) {
 		this.context = context;
-
-		// TODO Auto-generated constructor stub
+		this.stickyFlexibleListView = stickyFlexibleListView;
 	}
 
 	/*
@@ -414,7 +415,7 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 	 * @since 02-Mar-2013
 	 * @author Pushpan
 	 */
-	public final boolean collapse(int position) {
+	public final boolean collapse(final int position) {
 		boolean performedCollapse = false;
 		IQFliexibleListItem item = (IQFliexibleListItem) getItem(position);
 		if (item.getType() == IQFliexibleListItem.TYPE_HEADER) {
@@ -435,6 +436,17 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 				expandStates.put(actualGroupIndex, false);
 				performedCollapse = true;
 			}
+		}
+		if (clickedFromHeader) {
+			stickyFlexibleListView.removeHeader();
+			clickedFromHeader = false;
+			stickyFlexibleListView.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					stickyFlexibleListView.setSelection(position);
+				}
+			}, 100);
+
 		}
 		return performedCollapse;
 	}
@@ -467,6 +479,10 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 		IQFliexibleListItem item = (IQFliexibleListItem) getItem(position);
 		switch (v.getId()) {
 		case R.id.groupLayout:
+			View parent = (View) v.getParent().getParent();
+			if (parent != null && parent.getId() == R.id.headerLayout) {
+				clickedFromHeader = true;
+			}
 			if (isExpanded(item.getActualGroupIndex())) {
 				collapse(position);
 			} else {
@@ -476,6 +492,7 @@ public abstract class IQStickyFlexibleListBaseAdapter extends BaseAdapter
 				getOnFlexibleHeaderClickListener().onHeaderClicked(v,
 						item.getActualGroupIndex());
 			}
+			clickedFromHeader = false;
 			break;
 		case R.id.childLayout:
 			if (getOnFlexibleChildClickListener() != null) {

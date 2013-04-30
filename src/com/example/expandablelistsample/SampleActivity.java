@@ -19,7 +19,7 @@ public class SampleActivity extends Activity {
 		IQStickyFlexibleListView stickyFlexibleListView = new IQStickyFlexibleListView(
 				this);
 		setContentView(stickyFlexibleListView);
-		iQStickySectionAdapter = new IQStickyFlexibleListAdapter(this);
+		iQStickySectionAdapter = new IQStickyFlexibleListAdapter(this, stickyFlexibleListView);
 		stickyFlexibleListView.setAdapter(iQStickySectionAdapter);
 
 		headers.add("0");

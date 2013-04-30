@@ -8,6 +8,7 @@ package com.example.expandablelistsample;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -206,7 +207,7 @@ public class IQStickyFlexibleListView extends RelativeLayout implements
 	 * @since 23-Feb-2013
 	 * @author Pushpan
 	 */
-	private void removeHeader() {
+	public void removeHeader() {
 		if (headerView != null) {
 			headerViewContainer.removeView(headerView);
 		}
@@ -265,6 +266,14 @@ public class IQStickyFlexibleListView extends RelativeLayout implements
 				}, 200);
 			}
 		}
+
+		headerViewContainer.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Log.i("HEADER", "Click");
+			}
+		});
 	}
 
 	private void autoScrollHeader(View visibleView) {
@@ -411,5 +420,9 @@ public class IQStickyFlexibleListView extends RelativeLayout implements
 		if (adapter != null) {
 			adapter.setOnFlexibleMoreClickListener(onFlexibleMoreClickListener);
 		}
+	}
+	
+	public void setSelection(int index){
+		expandableListView.setSelection(index);
 	}
 }

@@ -25,8 +25,8 @@ public class IQStickyFlexibleListAdapter extends
 	 * @since 05-Mar-2013
 	 * @author Pushpan
 	 */
-	public IQStickyFlexibleListAdapter(Context context) {
-		super(context);
+	public IQStickyFlexibleListAdapter(Context context, IQStickyFlexibleListView stickyFlexibleListView) {
+		super(context, stickyFlexibleListView);
 		// TODO Auto-generated constructor stub
 	}
 
