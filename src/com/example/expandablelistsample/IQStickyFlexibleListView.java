@@ -421,8 +421,30 @@ public class IQStickyFlexibleListView extends RelativeLayout implements
 			adapter.setOnFlexibleMoreClickListener(onFlexibleMoreClickListener);
 		}
 	}
-	
-	public void setSelection(int index){
+
+	public void setSelection(int index) {
 		expandableListView.setSelection(index);
+	}
+
+	public boolean expand(int position) {
+		IQStickyFlexibleListBaseAdapter adapter = (IQStickyFlexibleListBaseAdapter) expandableListView
+				.getAdapter();
+		position = adapter.getCurrentIndexOfHeader(position);
+		if (position == -1) {
+			return false;
+		} else {
+			return adapter.expand(position);
+		}
+	}
+
+	public boolean collapse(int position) {
+		IQStickyFlexibleListBaseAdapter adapter = (IQStickyFlexibleListBaseAdapter) expandableListView
+				.getAdapter();
+		position = adapter.getCurrentIndexOfHeader(position);
+		if (position == -1) {
+			return false;
+		} else {
+			return adapter.collapse(position);
+		}
 	}
 }

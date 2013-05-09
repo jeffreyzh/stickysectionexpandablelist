@@ -19,7 +19,8 @@ public class SampleActivity extends Activity {
 		IQStickyFlexibleListView stickyFlexibleListView = new IQStickyFlexibleListView(
 				this);
 		setContentView(stickyFlexibleListView);
-		iQStickySectionAdapter = new IQStickyFlexibleListAdapter(this, stickyFlexibleListView);
+		iQStickySectionAdapter = new IQStickyFlexibleListAdapter(this,
+				stickyFlexibleListView);
 		stickyFlexibleListView.setAdapter(iQStickySectionAdapter);
 
 		headers.add("0");
@@ -243,7 +244,8 @@ public class SampleActivity extends Activity {
 					}
 				});
 		stickyFlexibleListView.setEnableMore(true);
-
+		stickyFlexibleListView.expand(0);
+		stickyFlexibleListView.expand(1);
 	}
 
 	@Override
